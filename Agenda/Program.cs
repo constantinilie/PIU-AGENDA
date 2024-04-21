@@ -1,12 +1,9 @@
 ﻿using System;
-
 using System.IO;
 using System.Configuration;
 using Obiect;
-using Obiect.Enumerari;
 using NivelStocareDate;
-
-
+using Obiect.Enumerari;
 
 namespace Agenda
 {
