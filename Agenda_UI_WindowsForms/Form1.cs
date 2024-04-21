@@ -30,9 +30,13 @@ namespace Agenda_UI_WindowsForms
         private Label[] lblsDataOra;
         private Label[] lblsOptiuni;
 
-        private const int LATIME_CONTROL = 100;
         private const int DIMENSIUNE_PAS_Y = 30;
-        private const int DIMENSIUNE_PAS_X = 120;
+        private const int DIMENSIUNE_PAS_X = 150;
+        private const int LATIME_CONTROL = 100;
+
+        private const int LATIME_CONTROL_DESCRIERE = 400;
+        private const int LUNGIME_CONTROL_DESCRIERE = 100;
+
         public Form1()
         {
             InitializeComponent();
@@ -44,7 +48,7 @@ namespace Agenda_UI_WindowsForms
             int nrActivitati = 0;
             Activitate[] activitati = adminActivitati.GetActivitati(out nrActivitati);
 
-            this.Size = new Size(700, 300);
+            this.Size = new Size(1000, 500);
             this.StartPosition = FormStartPosition.Manual;
             this.Location = new Point(100, 100);
             this.Font = new Font("Tahoma", 9, FontStyle.Bold);
@@ -96,7 +100,11 @@ namespace Agenda_UI_WindowsForms
             lblOptiuni.ForeColor = Color.DarkCyan;
             lblOptiuni.BorderStyle = BorderStyle.Fixed3D;
             this.Controls.Add(lblOptiuni);
-
+            
+            
+        }
+        private void Form1_Load(object sender, EventArgs e)
+        {
             AfiseazaActivitati();
         }
 

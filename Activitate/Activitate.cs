@@ -75,7 +75,15 @@ namespace Obiect
             {
                 dataora = DateTime.MinValue;
             }
-            string optiuniString = string.Join(",", Optiuni);
+            string optiuniString;
+            if (Optiuni != null)
+            {
+                 optiuniString = string.Join(",", Optiuni);
+            }
+            else
+            {
+                optiuniString= string.Empty;
+            }
             string activitatePentruFisier = string.Format("{1}{0}{2}{0}{3}{0}{4}{0}{5}{0}{6}",
                 SEPARATOR_PRINCIPAL_FISIER,
                 nrActivitate.ToString(),

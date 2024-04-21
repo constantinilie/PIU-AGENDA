@@ -6,6 +6,7 @@ namespace Obiect.Enumerari
 {
     public enum TipActivitate // TEMA LAB 5 1.a
     {
+        Necunoscut=0,
         Scoala = 1,
         Facultate = 2,
         Serviciu = 3,
