@@ -47,5 +47,51 @@ namespace NivelStocareDate
 
             return studenti;
         }
+        public Activitate[] CautaDupaTip(string tipCautat)
+        {
+            Activitate[] activitatiGasite = new Activitate[NR_MAX_ACTIVITATI];
+            int nrActivitateGasita = 0;
+
+            using (StreamReader streamReader = new StreamReader(numeFisier))
+            {
+                string linieFisier;
+
+                while ((linieFisier = streamReader.ReadLine()) != null)
+                {
+                    Activitate activitate = new Activitate(linieFisier);
+                    if (activitate.Tip.ToUpper() == tipCautat.ToUpper())
+                    {
+                        activitatiGasite[nrActivitateGasita] = activitate;
+                        nrActivitateGasita++;
+                    }
+                }
+            }
+
+            Array.Resize(ref activitatiGasite, nrActivitateGasita);
+            return activitatiGasite;
+        }
+        public Activitate[] CautaDupaNume(string numeCautat)
+        {
+            Activitate[] activitatiGasite = new Activitate[NR_MAX_ACTIVITATI];
+            int nrActivitateGasita = 0;
+
+            using (StreamReader streamReader = new StreamReader(numeFisier))
+            {
+                string linieFisier;
+
+                while ((linieFisier = streamReader.ReadLine()) != null)
+                {
+                    Activitate activitate = new Activitate(linieFisier);
+                    if (activitate.Nume.ToUpper() == numeCautat.ToUpper())
+                    {
+                        activitatiGasite[nrActivitateGasita] = activitate;
+                        nrActivitateGasita++;
+                    }
+                }
+            }
+
+            Array.Resize(ref activitatiGasite, nrActivitateGasita);
+            return activitatiGasite;
+        }
     }
 }
