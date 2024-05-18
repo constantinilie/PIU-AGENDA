@@ -58,10 +58,19 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="IntroducereNumeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IntroducereNumeForm.Designer.cs">
+      <DependentUpon>IntroducereNumeForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="CitireSiAfisare.resx">
       <DependentUpon>CitireSiAfisare.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IntroducereNumeForm.resx">
+      <DependentUpon>IntroducereNumeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -71,6 +80,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -98,6 +108,9 @@
       <Project>{0b227c35-c248-4df9-ba33-a73ef6b043d1}</Project>
       <Name>NivelStocareDate</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -48,7 +48,10 @@ namespace Agenda_UI_WindowsForms
         private Button btnAdauga;
         private Button btnAfiseaza;
         private Button btnRedimensioneaza;
+        private Button btnRedimensioneaza2;
         private Button btnCauta;
+        private Button btnStergeActivitate;
+        private Button btnWhiteDarkMode;
 
         private Panel panelLinie;
         private const int DIMENSIUNE_PAS_Y = 30;
@@ -61,7 +64,19 @@ namespace Agenda_UI_WindowsForms
         private const int LATIME_CONTROL_TEXT = 300;
         private const int LATIME_CONTROL_BUTON = 200;
         private const int LATIME_CONTROL_CHECKBOX = 100;
+        static bool isDarkMode = false;
+
         
+        static int nrActivitati = 0;
+
+        Activitate[] activitati = new Activitate[nrActivitati];
+        Label[] lblsNume = new Label[nrActivitati];
+        Label[] lblsDescriere = new Label[nrActivitati];
+        Label[] lblsTip = new Label[nrActivitati];
+        Label[] lblsDataOra = new Label[nrActivitati];
+        Label[] lblsOptiuni = new Label[nrActivitati];
+        RadioButton[] rbtnsActivitati = new RadioButton[nrActivitati];
+
         public CitireSiAfisare()
         {
             
@@ -72,7 +87,7 @@ namespace Agenda_UI_WindowsForms
 
             adminActivitati = new AdministrareActivitati_Fisier(caleCompletaFisier);
             
-            int nrActivitati = 0;
+            //int nrActivitati = 0;
             Activitate[] activitati = adminActivitati.GetActivitati(out nrActivitati);
 
             this.Size = new Size(615, 300);
@@ -100,7 +115,8 @@ namespace Agenda_UI_WindowsForms
             lblNume.Text = "Nume";
             lblNume.Left = 0*DIMENSIUNE_PAS_X+10;
             lblNume.Top = DIMENSIUNE_PAS_Y;
-            lblNume.ForeColor = Color.DarkBlue;
+            
+            lblNume.ForeColor = Color.Black;
             this.Controls.Add(lblNume);
 
             //adaugare control de tip TextBox pentru Nume;
@@ -118,7 +134,7 @@ namespace Agenda_UI_WindowsForms
             lblDescriere.Text = "Descriere";
             lblDescriere.Left = 0*DIMENSIUNE_PAS_X+10;
             lblDescriere.Top = 2 * DIMENSIUNE_PAS_Y;
-            lblDescriere.ForeColor = Color.DarkBlue;
+            lblDescriere.ForeColor = Color.Black;
 
             //adaugare control de tip TextBox pentru Descriere;
             txtDescriere = new TextBox();
@@ -138,7 +154,7 @@ namespace Agenda_UI_WindowsForms
             lblTip.Text = "Tip";
             lblTip.Left = 0*DIMENSIUNE_PAS_X+10;
             lblTip.Top = 3 * DIMENSIUNE_PAS_Y;
-            lblTip.ForeColor = Color.DarkBlue;
+            lblTip.ForeColor = Color.Black;
 
             this.Controls.Add(lblTip);
 
@@ -150,7 +166,7 @@ namespace Agenda_UI_WindowsForms
             cmbTip.Width = LATIME_CONTROL_DESCRIERE; ;
             cmbTip.Left = 1 * DIMENSIUNE_PAS_X;
             cmbTip.Top = 3 * DIMENSIUNE_PAS_Y;
-            cmbTip.ForeColor = Color.DarkBlue;
+            cmbTip.ForeColor = Color.Black;
             this.Controls.Add((cmbTip));
 
             //adaugare control de tip Label pentru DataOra;
@@ -159,7 +175,7 @@ namespace Agenda_UI_WindowsForms
             lblDataOra.Text = "Data si ora";
             lblDataOra.Left = 0*DIMENSIUNE_PAS_X+10;
             lblDataOra.Top = 4 * DIMENSIUNE_PAS_Y;
-            lblDataOra.ForeColor = Color.DarkBlue;
+            lblDataOra.ForeColor = Color.Black;
 
             this.Controls.Add(lblDataOra);
 
@@ -179,7 +195,7 @@ namespace Agenda_UI_WindowsForms
             lblOptiuni.Text = "Optiuni";
             lblOptiuni.Left = 0*DIMENSIUNE_PAS_X+10;
             lblOptiuni.Top = 5 * DIMENSIUNE_PAS_Y;
-            lblOptiuni.ForeColor = Color.DarkBlue;
+            lblOptiuni.ForeColor = Color.Black;
 
             this.Controls.Add(lblOptiuni);
            
@@ -192,7 +208,7 @@ namespace Agenda_UI_WindowsForms
             checkOptiuni.Width = LATIME_CONTROL_CHECKBOX; ;
             checkOptiuni.Left =   DIMENSIUNE_PAS_X+10;
             checkOptiuni.Top = 5 * DIMENSIUNE_PAS_Y;
-            checkOptiuni.ForeColor = Color.DarkBlue;
+            checkOptiuni.ForeColor = Color.Black;
             this.Controls.Add((checkOptiuni));
 
             checkOptiuni2 = new CheckBox();
@@ -201,7 +217,7 @@ namespace Agenda_UI_WindowsForms
             checkOptiuni2.Width =LATIME_CONTROL_CHECKBOX ;
             checkOptiuni2.Left = 2* (DIMENSIUNE_PAS_X)+10;
             checkOptiuni2.Top = 5 * DIMENSIUNE_PAS_Y;
-            checkOptiuni2.ForeColor = Color.DarkBlue;
+            checkOptiuni2.ForeColor = Color.Black;
             this.Controls.Add((checkOptiuni2));
 
             checkOptiuni3 = new CheckBox();
@@ -210,14 +226,14 @@ namespace Agenda_UI_WindowsForms
             checkOptiuni3.Width = LATIME_CONTROL_CHECKBOX;
             checkOptiuni3.Left = 3 * (DIMENSIUNE_PAS_X)+10;
             checkOptiuni3.Top = 5 * DIMENSIUNE_PAS_Y;
-            checkOptiuni3.ForeColor = Color.DarkBlue;
+            checkOptiuni3.ForeColor = Color.Black;
             this.Controls.Add((checkOptiuni3));
 
             //pentru optiunea de cautare TEMA-LAB8
             lblCauta = new Label();
             lblCauta.Left = 0 * DIMENSIUNE_PAS_X + 10;
             lblCauta.Top = 6 * DIMENSIUNE_PAS_Y+15;
-            lblCauta.ForeColor = Color.DarkBlue ;
+            lblCauta.ForeColor = Color.Black ;
             lblCauta.Text = "Cauta dupa:";
             lblCauta.Width = LATIME_CONTROL - 10;
             this.Controls.Add(lblCauta);
@@ -233,7 +249,7 @@ namespace Agenda_UI_WindowsForms
             cmbCautaDupa.Width = LATIME_CONTROL; ;
             cmbCautaDupa.Left = 1 * DIMENSIUNE_PAS_X;
             cmbCautaDupa.Top = 6 * DIMENSIUNE_PAS_Y+10;
-            cmbCautaDupa.ForeColor = Color.DarkBlue;
+            cmbCautaDupa.ForeColor = Color.Black;
             this.Controls.Add((cmbCautaDupa));
             //adaugare buton -//-
             btnCauta=new Button();
@@ -252,6 +268,7 @@ namespace Agenda_UI_WindowsForms
             txtCautaDupa.Top = 6 * DIMENSIUNE_PAS_Y+10;
             txtCautaDupa.GotFocus += txt_OnFocus;
             txtCautaDupa.LostFocus += txt_LostFocus;
+            txtCautaDupa.KeyPress += TxtCautaDupa_KeyPress;
             this.Controls.Add(txtCautaDupa);
 
 
@@ -283,6 +300,18 @@ namespace Agenda_UI_WindowsForms
        
             this.Controls.Add(btnAfiseaza);
 
+            btnStergeActivitate = new Button();
+            btnStergeActivitate.BackColor = Color.Bisque;
+            btnStergeActivitate.Width = LATIME_CONTROL_BUTON-40;
+            btnStergeActivitate.Text = "Sterge Activitate";
+            btnStergeActivitate.Left= 4* DIMENSIUNE_PAS_X+20;
+            btnStergeActivitate.Top = 5 * DIMENSIUNE_PAS_Y;
+            btnStergeActivitate.Click += OnButtonClicked_Sterge;
+            btnStergeActivitate.ForeColor=Color.Black;
+            this.Controls.Add((btnStergeActivitate));
+
+            
+
             //adaugare control de tip Button ce va redimensiona fereastra;
             btnRedimensioneaza = new Button();
             btnRedimensioneaza.BackColor = Color.Bisque;
@@ -293,6 +322,31 @@ namespace Agenda_UI_WindowsForms
             btnRedimensioneaza.Click += OnButtonClicked_Redimensioneaza;
             btnRedimensioneaza.ForeColor = Color.Black;
             this.Controls.Add(btnRedimensioneaza);
+
+            btnRedimensioneaza2 = new Button();
+            btnRedimensioneaza2.BackColor = Color.Bisque;
+            btnRedimensioneaza2.Width = 20;
+            btnRedimensioneaza2.Text = ">";
+            btnRedimensioneaza2.Left = 575;
+            btnRedimensioneaza2.Top = 7 * DIMENSIUNE_PAS_Y;
+            btnRedimensioneaza2.Click += OnButtonClicked_Redimensioneaza2;
+            btnRedimensioneaza2.ForeColor = Color.Black;
+            
+
+
+
+
+            btnWhiteDarkMode = new Button();
+            btnWhiteDarkMode.BackColor = Color.Bisque;
+            btnWhiteDarkMode.Width = LATIME_CONTROL_BUTON-40;
+            btnWhiteDarkMode.Text = "Dark/White MODE";
+            btnWhiteDarkMode.Top = DIMENSIUNE_PAS_Y;
+            btnWhiteDarkMode.Left = 4 * DIMENSIUNE_PAS_X + 20;
+            btnWhiteDarkMode.Click += OnButtonClicked_DarkLightMode;
+            btnWhiteDarkMode.ForeColor=Color.Black;
+            this.Controls.Add(btnWhiteDarkMode);
+
+
             #endregion
         }
 
@@ -317,8 +371,8 @@ namespace Agenda_UI_WindowsForms
             {
                 lblDescriere.Text = "Descriere";
                 lblNume.Text = "Nume";
-                lblNume.ForeColor = Color.DarkBlue;
-                lblDescriere.ForeColor=Color.DarkBlue;
+                lblNume.ForeColor = Color.Black;
+                lblDescriere.ForeColor=Color.Black;
                 string nume = txtNume.Text.Trim();
                 string descriere = txtDescriere.Text.Trim();
                 string tip = cmbTip.Text;
@@ -358,13 +412,20 @@ namespace Agenda_UI_WindowsForms
 
         private void AfiseazaActivitati() //TEMA LAB6
         {
-            Activitate[] activitati = adminActivitati.GetActivitati(out int nrActivitati);
-            Label[] lblsNume = new Label[nrActivitati];
-            Label[] lblsDescriere = new Label[nrActivitati];
-            Label[] lblsTip = new Label[nrActivitati];
-            Label[] lblsDataOra = new Label[nrActivitati];
-            Label[] lblsOptiuni = new Label[nrActivitati];
-            
+            if (rbtnsActivitati != null)
+            {
+                foreach (var radioBtn in rbtnsActivitati)
+                {
+                    this.Controls.Remove(radioBtn);
+                }
+            }
+            activitati = adminActivitati.GetActivitati(out int nrActivitati);
+             lblsNume = new Label[nrActivitati];
+             lblsDescriere = new Label[nrActivitati];
+             lblsTip = new Label[nrActivitati];
+             lblsDataOra = new Label[nrActivitati];
+             lblsOptiuni = new Label[nrActivitati];
+             rbtnsActivitati = new RadioButton[nrActivitati];
 
 
             //adaugare control de tip Label pentru Nume;
@@ -375,7 +436,7 @@ namespace Agenda_UI_WindowsForms
             lblNume2.Font = new Font("Tahoma", 11, FontStyle.Bold);
             lblNume2.Left =4* DIMENSIUNE_PAS_X_MARE;
             lblNume2.Top= DIMENSIUNE_PAS_Y;
-            lblNume2.ForeColor = Color.DarkBlue;
+            lblNume2.ForeColor = Color.Black;
             lblNume2.BorderStyle = BorderStyle.Fixed3D;
             this.Controls.Add(lblNume2);
 
@@ -388,7 +449,7 @@ namespace Agenda_UI_WindowsForms
             lblTip2.Font = new Font("Tahoma", 11, FontStyle.Bold);
             lblTip2.Left = 5 * DIMENSIUNE_PAS_X_MARE;
             lblTip2.Top = 1 * DIMENSIUNE_PAS_Y;
-            lblTip2.ForeColor = Color.DarkBlue;
+            lblTip2.ForeColor = Color.Black;
             lblTip2.BorderStyle = BorderStyle.Fixed3D;
             this.Controls.Add(lblTip2);
 
@@ -400,7 +461,7 @@ namespace Agenda_UI_WindowsForms
             lblDataOra2.Font = new Font("Tahoma", 11, FontStyle.Bold);
             lblDataOra2.Left = 6 * DIMENSIUNE_PAS_X_MARE;
             lblDataOra2.Top = 1 * DIMENSIUNE_PAS_Y;
-            lblDataOra2.ForeColor = Color.DarkBlue;
+            lblDataOra2.ForeColor = Color.Black;
             lblDataOra2.BorderStyle = BorderStyle.Fixed3D;
             this.Controls.Add(lblDataOra2);
 
@@ -412,7 +473,7 @@ namespace Agenda_UI_WindowsForms
             lblDescriere2.Font = new Font("Tahoma", 11, FontStyle.Bold);
             lblDescriere2.Left = 7 * DIMENSIUNE_PAS_X_MARE;
             lblDescriere2.Top = 1 * DIMENSIUNE_PAS_Y;
-            lblDescriere2.ForeColor = Color.DarkBlue;
+            lblDescriere2.ForeColor = Color.Black;
             lblDescriere2.BorderStyle = BorderStyle.Fixed3D;
             this.Controls.Add(lblDescriere2);
 
@@ -424,7 +485,7 @@ namespace Agenda_UI_WindowsForms
             lblOptiuni2.Font = new Font("Tahoma", 11, FontStyle.Bold);
             lblOptiuni2.Left = 8 * DIMENSIUNE_PAS_X_MARE;
             lblOptiuni2.Top = 1 * DIMENSIUNE_PAS_Y;
-            lblOptiuni2.ForeColor = Color.DarkBlue;
+            lblOptiuni2.ForeColor = Color.Black;
             lblOptiuni2.BorderStyle = BorderStyle.Fixed3D;
             this.Controls.Add(lblOptiuni2);
 
@@ -439,6 +500,13 @@ namespace Agenda_UI_WindowsForms
             foreach (Activitate activitate in activitati)
             {
 
+                rbtnsActivitati[i] = new RadioButton();
+                rbtnsActivitati[i].Left = (4 * DIMENSIUNE_PAS_X_MARE) - 15;
+                rbtnsActivitati[i].Top = (i + 2) * DIMENSIUNE_PAS_Y;
+                rbtnsActivitati[i].Width = 15;
+                rbtnsActivitati[i].Height = 15;
+                rbtnsActivitati[i].CheckedChanged+=RadioButton_CheckedChanged;
+                this.Controls.Add(rbtnsActivitati[i]);
 
                 //adaugare control de tip Label pentru numele activitatilor;
                 lblsNume[i] = new Label();
@@ -497,6 +565,32 @@ namespace Agenda_UI_WindowsForms
                 
                 i++;
             }
+            Color darkBackgroundColor = Color.FromArgb(30, 30, 30);
+            Color darkForegroundColor = Color.White;
+
+            Color lightBackgroundColor = Color.Beige;
+            Color lightForegroundColor = SystemColors.ControlText;
+
+            // Verificăm dacă fundalul este în modul Dark
+            bool isDarkMode = BackColor == darkBackgroundColor;
+            foreach (Control control in Controls)
+            {
+                // Ignoră câmpurile de text
+                if (control is TextBox)
+                    continue;
+
+                if (!isDarkMode)
+                {
+                    control.BackColor = lightBackgroundColor;
+                    control.ForeColor = lightForegroundColor;
+                    
+                }
+                else
+                {
+                    control.BackColor = darkBackgroundColor;
+                    control.ForeColor = darkForegroundColor;
+                }
+            }
             
         }
 
@@ -514,148 +608,151 @@ namespace Agenda_UI_WindowsForms
         }
         private void AfiseazaActivitatiCautate(Activitate[] activitati) //TEMA LAB6
         {
+
             
-            if (activitati != null && activitati.Length > 0)
-            {
-                Label[] lblsNume = new Label[activitati.Length];
-                Label[] lblsDescriere = new Label[activitati.Length];
-                Label[] lblsTip = new Label[activitati.Length];
-                Label[] lblsDataOra = new Label[activitati.Length];
-                Label[] lblsOptiuni = new Label[activitati.Length];
-
-
-
-                //adaugare control de tip Label pentru Nume;
-                lblNume2 = new Label();
-                lblNume2.Width = LATIME_CONTROL;
-                lblNume2.Text = "Nume";
-                lblNume2.TextAlign = ContentAlignment.MiddleCenter;
-                lblNume2.Font = new Font("Tahoma", 11, FontStyle.Bold);
-                lblNume2.Left = 0 * DIMENSIUNE_PAS_X+15;
-                lblNume2.Top = 7*DIMENSIUNE_PAS_Y+10;
-                lblNume2.ForeColor = Color.DarkBlue;
-                lblNume2.BorderStyle = BorderStyle.Fixed3D;
-                this.Controls.Add(lblNume2);
-
-
-                //adaugare control de tip Label pentru Tip;
-                lblTip2 = new Label();
-                lblTip2.Width = LATIME_CONTROL;
-                lblTip2.Text = "Tip";
-                lblTip2.TextAlign = ContentAlignment.MiddleCenter;
-                lblTip2.Font = new Font("Tahoma", 11, FontStyle.Bold);
-                lblTip2.Left = 1 * DIMENSIUNE_PAS_X+15;
-                lblTip2.Top = 7 * DIMENSIUNE_PAS_Y+10;
-                lblTip2.ForeColor = Color.DarkBlue;
-                lblTip2.BorderStyle = BorderStyle.Fixed3D;
-                this.Controls.Add(lblTip2);
-
-                //adaugare control de tip Label pentru DataOra;
-                lblDataOra2 = new Label();
-                lblDataOra2.Width = LATIME_CONTROL;
-                lblDataOra2.Text = "Data si ora";
-                lblDataOra2.TextAlign = ContentAlignment.MiddleCenter;
-                lblDataOra2.Font = new Font("Tahoma", 11, FontStyle.Bold);
-                lblDataOra2.Left = 2 * DIMENSIUNE_PAS_X+15;
-                lblDataOra2.Top = 7 * DIMENSIUNE_PAS_Y+10;
-                lblDataOra2.ForeColor = Color.DarkBlue;
-                lblDataOra2.BorderStyle = BorderStyle.Fixed3D;
-                this.Controls.Add(lblDataOra2);
-
-                //adaugare control de tip Label pentru Descriere;
-                lblDescriere2 = new Label();
-                lblDescriere2.Width = LATIME_CONTROL;
-                lblDescriere2.Text = "Descriere";
-                lblDescriere2.TextAlign = ContentAlignment.MiddleCenter;
-                lblDescriere2.Font = new Font("Tahoma", 11, FontStyle.Bold);
-                lblDescriere2.Left = 3 * DIMENSIUNE_PAS_X+15;
-                lblDescriere2.Top = 7 * DIMENSIUNE_PAS_Y+10;
-                lblDescriere2.ForeColor = Color.DarkBlue;
-                lblDescriere2.BorderStyle = BorderStyle.Fixed3D;
-                this.Controls.Add(lblDescriere2);
-
-                //adaugare control de tip Label pentru Optiuni;
-                lblOptiuni2 = new Label();
-                lblOptiuni2.Width = LATIME_CONTROL;
-                lblOptiuni2.Text = "Optiuni";
-                lblOptiuni2.TextAlign = ContentAlignment.MiddleCenter;
-                lblOptiuni2.Font = new Font("Tahoma", 11, FontStyle.Bold);
-                lblOptiuni2.Left = 4 * DIMENSIUNE_PAS_X+15;
-                lblOptiuni2.Top = 7 * DIMENSIUNE_PAS_Y+10;
-                lblOptiuni2.ForeColor = Color.DarkBlue;
-                lblOptiuni2.BorderStyle = BorderStyle.Fixed3D;
-                this.Controls.Add(lblOptiuni2);
-
-
-
-
-
-
-
-
-                int i = 0;
-                foreach (Activitate activitate in activitati)
+                if (activitati != null && activitati.Length > 0)
                 {
+                    Label[] lblsNume = new Label[activitati.Length];
+                    Label[] lblsDescriere = new Label[activitati.Length];
+                    Label[] lblsTip = new Label[activitati.Length];
+                    Label[] lblsDataOra = new Label[activitati.Length];
+                    Label[] lblsOptiuni = new Label[activitati.Length];
 
 
-                    //adaugare control de tip Label pentru numele activitatilor;
-                    lblsNume[i] = new Label();
-                    lblsNume[i].Width = LATIME_CONTROL;
-                    lblsNume[i].Text = activitate.Nume;
-                    lblsNume[i].Left = 0 * DIMENSIUNE_PAS_X+15;
-                    lblsNume[i].Top = (i + 8) * DIMENSIUNE_PAS_Y+10;
-                    lblsNume[i].ForeColor = Color.Black;
-                    this.Controls.Add(lblsNume[i]);
 
-                    //adaugare control de tip Label pentru Tipul activitatilor;
-                    lblsTip[i] = new Label();
-                    lblsTip[i].Width = LATIME_CONTROL;
-                    lblsTip[i].Text = activitate.Tip;
-                    lblsTip[i].Left = 1 * DIMENSIUNE_PAS_X+ 15;
-                    lblsTip[i].Top = (i + 8) * DIMENSIUNE_PAS_Y+10;
-                    lblsTip[i].ForeColor = Color.Black;
-                    this.Controls.Add(lblsTip[i]);
-
-                    //adaugare control de tip Label pentru Data si ora activitatilor;
-                    lblsDataOra[i] = new Label();
-                    lblsDataOra[i].Width = LATIME_CONTROL;
-                    lblsDataOra[i].Text = Convert.ToString(activitate.DataOra);
-                    lblsDataOra[i].Left = 2 * DIMENSIUNE_PAS_X+ 15;
-                    lblsDataOra[i].Top = (i + 8) * DIMENSIUNE_PAS_Y+10;
-                    lblsDataOra[i].ForeColor = Color.Black;
-                    lblsDataOra[i].MouseHover += label_MouseHover;
-                    this.Controls.Add(lblsDataOra[i]);
+                    //adaugare control de tip Label pentru Nume;
+                    lblNume2 = new Label();
+                    lblNume2.Width = LATIME_CONTROL;
+                    lblNume2.Text = "Nume";
+                    lblNume2.TextAlign = ContentAlignment.MiddleCenter;
+                    lblNume2.Font = new Font("Tahoma", 11, FontStyle.Bold);
+                    lblNume2.Left = 0 * DIMENSIUNE_PAS_X + 15;
+                    lblNume2.Top = 7 * DIMENSIUNE_PAS_Y + 10;
+                    lblNume2.ForeColor = Color.Black;
+                    lblNume2.BorderStyle = BorderStyle.Fixed3D;
+                    this.Controls.Add(lblNume2);
 
 
-                    //adaugare control de tip Label pentru descrierea activitatilor;
-                    lblsDescriere[i] = new Label();
-                    lblsDescriere[i].Width = LATIME_CONTROL;
-                    lblsDescriere[i].Text = activitate.Descriere;
-                    lblsDescriere[i].Left = 3 * DIMENSIUNE_PAS_X+ 15;
-                    lblsDescriere[i].Top = (i + 8) * DIMENSIUNE_PAS_Y+10;
-                    lblsDescriere[i].ForeColor = Color.Black;
-                    lblsDescriere[i].MouseHover += label_MouseHover;
+                    //adaugare control de tip Label pentru Tip;
+                    lblTip2 = new Label();
+                    lblTip2.Width = LATIME_CONTROL;
+                    lblTip2.Text = "Tip";
+                    lblTip2.TextAlign = ContentAlignment.MiddleCenter;
+                    lblTip2.Font = new Font("Tahoma", 11, FontStyle.Bold);
+                    lblTip2.Left = 1 * DIMENSIUNE_PAS_X + 15;
+                    lblTip2.Top = 7 * DIMENSIUNE_PAS_Y + 10;
+                    lblTip2.ForeColor = Color.Black;
+                    lblTip2.BorderStyle = BorderStyle.Fixed3D;
+                    this.Controls.Add(lblTip2);
 
-                    this.Controls.Add(lblsDescriere[i]);
+                    //adaugare control de tip Label pentru DataOra;
+                    lblDataOra2 = new Label();
+                    lblDataOra2.Width = LATIME_CONTROL;
+                    lblDataOra2.Text = "Data si ora";
+                    lblDataOra2.TextAlign = ContentAlignment.MiddleCenter;
+                    lblDataOra2.Font = new Font("Tahoma", 11, FontStyle.Bold);
+                    lblDataOra2.Left = 2 * DIMENSIUNE_PAS_X + 15;
+                    lblDataOra2.Top = 7 * DIMENSIUNE_PAS_Y + 10;
+                    lblDataOra2.ForeColor = Color.Black;
+                    lblDataOra2.BorderStyle = BorderStyle.Fixed3D;
+                    this.Controls.Add(lblDataOra2);
+
+                    //adaugare control de tip Label pentru Descriere;
+                    lblDescriere2 = new Label();
+                    lblDescriere2.Width = LATIME_CONTROL;
+                    lblDescriere2.Text = "Descriere";
+                    lblDescriere2.TextAlign = ContentAlignment.MiddleCenter;
+                    lblDescriere2.Font = new Font("Tahoma", 11, FontStyle.Bold);
+                    lblDescriere2.Left = 3 * DIMENSIUNE_PAS_X + 15;
+                    lblDescriere2.Top = 7 * DIMENSIUNE_PAS_Y + 10;
+                    lblDescriere2.ForeColor = Color.Black;
+                    lblDescriere2.BorderStyle = BorderStyle.Fixed3D;
+                    this.Controls.Add(lblDescriere2);
+
+                    //adaugare control de tip Label pentru Optiuni;
+                    lblOptiuni2 = new Label();
+                    lblOptiuni2.Width = LATIME_CONTROL;
+                    lblOptiuni2.Text = "Optiuni";
+                    lblOptiuni2.TextAlign = ContentAlignment.MiddleCenter;
+                    lblOptiuni2.Font = new Font("Tahoma", 11, FontStyle.Bold);
+                    lblOptiuni2.Left = 4 * DIMENSIUNE_PAS_X + 15;
+                    lblOptiuni2.Top = 7 * DIMENSIUNE_PAS_Y + 10;
+                    lblOptiuni2.ForeColor = Color.Black;
+                    lblOptiuni2.BorderStyle = BorderStyle.Fixed3D;
+                    this.Controls.Add(lblOptiuni2);
 
 
-                    //adaugare control de tip Label pentru Optiunea activitatilor;
-                    string optiunistr = string.Join(",", activitate.Optiuni);
-                    lblsOptiuni[i] = new Label();
-                    lblsOptiuni[i].Width = LATIME_CONTROL;
-                    lblsOptiuni[i].Text = Convert.ToString(optiunistr);
-                    lblsOptiuni[i].Left = 4 * DIMENSIUNE_PAS_X+ 15;
-                    lblsOptiuni[i].Top = (i + 8) * DIMENSIUNE_PAS_Y+10;
-                    lblsOptiuni[i].ForeColor = Color.Black;
-
-                    lblsOptiuni[i].MouseHover += label_MouseHover;
-
-                    this.Controls.Add(lblsOptiuni[i]);
 
 
-                    i++;
+
+
+
+
+                    int i = 0;
+                    foreach (Activitate activitate in activitati)
+                    {
+
+
+                        //adaugare control de tip Label pentru numele activitatilor;
+                        lblsNume[i] = new Label();
+                        lblsNume[i].Width = LATIME_CONTROL;
+                        lblsNume[i].Text = activitate.Nume;
+                        lblsNume[i].Left = 0 * DIMENSIUNE_PAS_X + 15;
+                        lblsNume[i].Top = (i + 8) * DIMENSIUNE_PAS_Y + 10;
+                        lblsNume[i].ForeColor = Color.Black;
+                        this.Controls.Add(lblsNume[i]);
+
+                        //adaugare control de tip Label pentru Tipul activitatilor;
+                        lblsTip[i] = new Label();
+                        lblsTip[i].Width = LATIME_CONTROL;
+                        lblsTip[i].Text = activitate.Tip;
+                        lblsTip[i].Left = 1 * DIMENSIUNE_PAS_X + 15;
+                        lblsTip[i].Top = (i + 8) * DIMENSIUNE_PAS_Y + 10;
+                        lblsTip[i].ForeColor = Color.Black;
+                        this.Controls.Add(lblsTip[i]);
+
+                        //adaugare control de tip Label pentru Data si ora activitatilor;
+                        lblsDataOra[i] = new Label();
+                        lblsDataOra[i].Width = LATIME_CONTROL;
+                        lblsDataOra[i].Text = Convert.ToString(activitate.DataOra);
+                        lblsDataOra[i].Left = 2 * DIMENSIUNE_PAS_X + 15;
+                        lblsDataOra[i].Top = (i + 8) * DIMENSIUNE_PAS_Y + 10;
+                        lblsDataOra[i].ForeColor = Color.Black;
+                        lblsDataOra[i].MouseHover += label_MouseHover;
+                        this.Controls.Add(lblsDataOra[i]);
+
+
+                        //adaugare control de tip Label pentru descrierea activitatilor;
+                        lblsDescriere[i] = new Label();
+                        lblsDescriere[i].Width = LATIME_CONTROL;
+                        lblsDescriere[i].Text = activitate.Descriere;
+                        lblsDescriere[i].Left = 3 * DIMENSIUNE_PAS_X + 15;
+                        lblsDescriere[i].Top = (i + 8) * DIMENSIUNE_PAS_Y + 10;
+                        lblsDescriere[i].ForeColor = Color.Black;
+                        lblsDescriere[i].MouseHover += label_MouseHover;
+
+                        this.Controls.Add(lblsDescriere[i]);
+
+
+                        //adaugare control de tip Label pentru Optiunea activitatilor;
+                        string optiunistr = string.Join(",", activitate.Optiuni);
+                        lblsOptiuni[i] = new Label();
+                        lblsOptiuni[i].Width = LATIME_CONTROL;
+                        lblsOptiuni[i].Text = Convert.ToString(optiunistr);
+                        lblsOptiuni[i].Left = 4 * DIMENSIUNE_PAS_X + 15;
+                        lblsOptiuni[i].Top = (i + 8) * DIMENSIUNE_PAS_Y + 10;
+                        lblsOptiuni[i].ForeColor = Color.Black;
+
+                        lblsOptiuni[i].MouseHover += label_MouseHover;
+
+                        this.Controls.Add(lblsOptiuni[i]);
+
+
+                        i++;
+                    }
                 }
-            }
+            
+
         }
         #endregion
 
@@ -690,13 +787,26 @@ namespace Agenda_UI_WindowsForms
 
         private void OnButtonClicked_Afiseaza(object sender, EventArgs e)
         {
-            this.Size = new Size(1375, 800);
-            AfiseazaActivitati();
+                this.Controls.Add(btnRedimensioneaza2);
+                this.Size = new Size(1375, 800);
+                AfiseazaActivitati();
+                
+            
+                
+            
+
         }
         private void OnButtonClicked_Redimensioneaza(object sender, EventArgs e)
         {
             this.Size = new Size(615, 800);
+            btnAfiseaza.Enabled = true;
         }
+        private void OnButtonClicked_Redimensioneaza2(object sender, EventArgs e)
+        {
+            this.Size = new Size(1375, 800);
+            
+        }
+
 
         private void OnButtonClicked_Adauga(object sender, EventArgs e)
         {
@@ -712,9 +822,47 @@ namespace Agenda_UI_WindowsForms
             checkOptiuni.Checked = false;
             checkOptiuni2.Checked = false;
             checkOptiuni3.Checked = false;
+            AfiseazaActivitati();
+        }
+        private void OnButtonClicked_Sterge(object sender, EventArgs e)
+        {
+            
+            btnStergeActivitate.ForeColor = Color.Black;
+            int selectedIndex = -1;
+            for (int j = 0; j < rbtnsActivitati.Length; j++)
+            {
+                if (rbtnsActivitati[j].Checked)
+                {
+                    selectedIndex = j;
+                    break;
+                }
+            }
+
+            
+            if (selectedIndex == -1)
+            {
+                btnStergeActivitate.ForeColor = Color.Red;
+                return;
+            }
+            
+
+            adminActivitati.StergeActivitate(activitati[selectedIndex]);
+
+
+            for (int j = this.Controls.Count - 1; j >= 0; j--)
+            {
+                Control control = this.Controls[j];
+                if (control.Top > 0 && control.Left > 600)
+                {
+                    this.Controls.Remove(control);
+                    
+                }
+            }
+            AfiseazaActivitati();
+
+            this.Controls.Add(btnRedimensioneaza);
 
         }
-
         private void OnButtonClicked_Cauta(object sender, EventArgs e)
         {
             if(cmbCautaDupa.SelectedIndex == 0|txtCautaDupa.Text==string.Empty)
@@ -749,14 +897,100 @@ namespace Agenda_UI_WindowsForms
             }
             if (cmbCautaDupa.SelectedIndex != 0 && txtCautaDupa.Text != string.Empty)
             {
-                lblCauta.ForeColor = Color.DarkBlue;
+                lblCauta.ForeColor = Color.Black;
                 lblCauta.Text = "Cauta dupa";
             }
             
             cmbCautaDupa.SelectedIndex = 0;
             txtCautaDupa.Text = null;
+            Color darkBackgroundColor = Color.FromArgb(30, 30, 30);
+            Color darkForegroundColor = Color.White;
+
+            Color lightBackgroundColor = Color.Beige;
+            Color lightForegroundColor = SystemColors.ControlText;
+
+            // Verificăm dacă fundalul este în modul Dark
+            bool isDarkMode = BackColor == darkBackgroundColor;
+            foreach (Control control in Controls)
+            {
+                // Ignoră câmpurile de text
+                if (control is TextBox)
+                    continue;
+
+                if (!isDarkMode)
+                {
+                    control.BackColor = lightBackgroundColor;
+                    control.ForeColor = lightForegroundColor;
+
+                }
+                else
+                {
+                    control.BackColor = darkBackgroundColor;
+                    control.ForeColor = darkForegroundColor;
+                }
+            }
 
 
+        }
+        private void RadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            RadioButton selectedRadioButton = sender as RadioButton;
+            int selectedIndex = Array.IndexOf(rbtnsActivitati, selectedRadioButton);
+            // Actualizați starea internă a radio-box-urilor sau faceți alte operații în funcție de selecția utilizatorului
+        }
+
+        private void OnButtonClicked_DarkLightMode( object sender, EventArgs e)
+        {
+            Color darkBackgroundColor = Color.FromArgb(30, 30, 30);
+            Color darkForegroundColor = Color.White;
+
+            Color lightBackgroundColor = Color.Beige;
+            Color lightForegroundColor = SystemColors.ControlText;
+
+            // Verificăm dacă fundalul este în modul Dark
+            bool isDarkMode = BackColor == darkBackgroundColor;
+
+            // Schimbăm modul
+            if (isDarkMode)
+            {
+                BackColor = lightBackgroundColor;
+                ForeColor = lightForegroundColor;
+            }
+            else
+            {
+                BackColor = darkBackgroundColor;
+                ForeColor = darkForegroundColor;
+            }
+
+            // Setează culorile pentru alte controale, cum ar fi butoanele, etichetele etc.
+            foreach (Control control in Controls)
+            {
+                // Ignoră câmpurile de text
+                if (control is TextBox)
+                    continue;
+
+                if (isDarkMode)
+                {
+                    control.BackColor = lightBackgroundColor;
+                    control.ForeColor = lightForegroundColor;
+                    isDarkMode=true;
+                }
+                else
+                {
+                    control.BackColor = darkBackgroundColor;
+                    control.ForeColor = darkForegroundColor;
+                }
+            }
+            Refresh();
+        }
+        private void TxtCautaDupa_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Verificăm dacă tasta apăsată este Enter (cod ASCII 13)
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                // Apelăm evenimentul de click al butonului Cauta
+                btnCauta.PerformClick();
+            }
         }
 
         #endregion
